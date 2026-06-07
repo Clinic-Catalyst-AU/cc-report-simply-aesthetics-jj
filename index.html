@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Simply Aesthetics JJ - Clinic Catalyst Proposal</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0A2A28;
+  --dark-alt: #0D3D38;
+  --teal: #00B4A0;
+  --teal-bright: #00D4BC;
+  --peach: #E8A87C;
+  --peach-light: #F5C7A0;
+  --white: #FFFFFF;
+  --text-faint: rgba(255,255,255,0.6);
+  --text-mid: rgba(255,255,255,0.85);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Open Sans',sans-serif; background:#000; color:var(--white); overflow:hidden; }
+
+.deck { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; }
+.slide { height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.slide-html { padding:3rem 4rem; background:linear-gradient(160deg, #0A2A28 0%, #0E3D3A 40%, #0A2A28 100%); }
+.slide-html.alt { background:linear-gradient(160deg, #0D3D38 0%, #0A2A28 50%, #0D3D38 100%); }
+.slide-html.teal-bg { background:linear-gradient(135deg, #073B36 0%, #0A2A28 100%); }
+.inner { max-width:1100px; width:100%; position:relative; z-index:2; }
+
+.dot-overlay { position:absolute; inset:0; opacity:0.05; background-image:radial-gradient(circle,var(--teal) 1px,transparent 1px); background-size:50px 50px; pointer-events:none; }
+.glow { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(0,180,160,0.12) 0%,transparent 70%); pointer-events:none; }
+.glow-tl { top:-200px; left:-200px; }
+.glow-br { bottom:-200px; right:-200px; }
+.glow-center { top:50%; left:50%; transform:translate(-50%,-50%); width:800px; height:800px; }
+
+.label { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal-bright); margin-bottom:0.75rem; }
+.label-peach { color:var(--peach); }
+h2 { font-family:'Montserrat',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; text-transform:uppercase; line-height:1.1; margin-bottom:1rem; }
+h3 { font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; margin-bottom:0.6rem; }
+.teal { color:var(--teal-bright); }
+.peach { color:var(--peach); }
+p { font-size:0.9rem; color:var(--text-mid); font-weight:300; line-height:1.8; }
+
+.split { display:grid; grid-template-columns:2fr 3fr; gap:3rem; align-items:center; }
+.split-even { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem; }
+.mt-1 { margin-top:1rem; }
+.mt-2 { margin-top:2rem; }
+
+.task-num { font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--peach); display:inline-block; border:1px solid rgba(232,168,124,0.3); padding:0.25rem 0.7rem; border-radius:4px; margin-bottom:0.8rem; }
+.quote { border-left:3px solid var(--peach); padding:0.8rem 1.2rem; margin-bottom:1.5rem; background:rgba(232,168,124,0.04); border-radius:0 6px 6px 0; }
+.quote p { font-style:italic; color:var(--peach-light); font-size:1rem; line-height:1.5; }
+
+.card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:8px; padding:1.3rem; }
+.card h4 { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal-bright); margin-bottom:0.4rem; }
+.card p { font-size:0.8rem; color:var(--text-faint); line-height:1.6; }
+
+.stat-number { font-family:'Montserrat',sans-serif; font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; color:var(--teal-bright); }
+
+.scroll-arrow { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); text-align:center; z-index:10; animation:bounce 2s infinite; cursor:pointer; }
+.scroll-arrow span { display:block; font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:600; color:rgba(255,255,255,0.4); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
+.scroll-arrow .arrow { font-size:1.8rem; color:var(--teal-bright); }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+.sig-line { border-bottom:1px solid rgba(255,255,255,0.25); padding-bottom:0.5rem; margin-top:2rem; min-width:220px; display:inline-block; }
+.sig-label { font-size:0.65rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.3rem; }
+
+.slide-counter { position:fixed; bottom:1.2rem; right:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.25); letter-spacing:0.08em; z-index:100; }
+.nav-hint { position:fixed; bottom:1.2rem; left:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.55rem; color:rgba(255,255,255,0.15); letter-spacing:0.08em; z-index:100; }
+
+.cover-hero { text-align:center; }
+.cover-hero .wordmark { height:40px; margin-bottom:3rem; opacity:0.9; }
+.cover-hero h1 { font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(2rem,4vw,3.2rem); text-transform:uppercase; letter-spacing:2px; line-height:1.1; margin-bottom:0.5rem; }
+.cover-hero .date { font-size:0.85rem; color:var(--text-faint); margin-bottom:0.3rem; }
+.cover-hero .prepared { font-size:0.7rem; color:rgba(255,255,255,0.35); letter-spacing:2px; text-transform:uppercase; }
+.cover-hero .prepared strong { color:var(--teal-bright); font-weight:600; }
+
+.team-photo { width:100%; border-radius:12px; object-fit:cover; object-position:center top; border:2px solid rgba(0,180,160,0.2); }
+
+.win-item { display:flex; align-items:flex-start; gap:0.6rem; margin-bottom:0.8rem; }
+.win-check { color:var(--teal-bright); font-weight:700; flex-shrink:0; margin-top:2px; }
+.win-text { font-size:0.82rem; color:var(--text-mid); line-height:1.5; }
+
+.vs-col { padding:1.5rem; border-radius:10px; }
+.vs-us { background:rgba(0,180,160,0.08); border:1px solid rgba(0,180,160,0.2); }
+
+.price-card { background:rgba(0,180,160,0.06); border:2px solid var(--teal); border-radius:12px; padding:2rem; text-align:center; }
+.price-tag { font-family:'Montserrat',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:var(--teal-bright); }
+.price-period { font-size:0.75rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; }
+.includes-list { list-style:none; text-align:left; margin-top:1.2rem; }
+.includes-list li { padding:0.35rem 0; font-size:0.78rem; color:var(--text-mid); border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; gap:0.4rem; }
+.includes-list li::before { content:"\2713"; color:var(--teal-bright); font-weight:700; }
+.discount-badge { display:inline-block; background:var(--peach); color:var(--dark); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; padding:0.35rem 0.9rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; margin-top:1rem; }
+.faq-item { padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.faq-q { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; color:var(--peach); margin-bottom:0.3rem; }
+.faq-a { font-size:0.8rem; color:var(--text-faint); }
+
+@media print {
+  .deck { overflow:visible; scroll-snap-type:none; }
+  .slide { min-height:100vh; page-break-after:always; }
+  .slide-counter, .nav-hint { display:none; }
+}
+@media (max-width:768px) {
+  .slide { min-height:100vh; padding:2rem 1.2rem; }
+  .slide-html { padding:2rem 1.2rem; }
+  .split, .split-even, .grid-2, .grid-3 { grid-template-columns:1fr; gap:1rem; }
+  [style*="grid-template-columns"] { grid-template-columns:1fr !important; gap:1rem !important; }
+  h2 { font-size:1.2rem; }
+  .cover-hero h1 { font-size:1.6rem; }
+  .scroll-arrow { display:none; }
+  .slide-counter { display:none; }
+  .price-card { padding:1.2rem; }
+  .price-tag { font-size:1.8rem; }
+  .includes-list li { font-size:0.7rem; padding:0.25rem 0; }
+  .discount-badge { font-size:0.6rem; padding:0.25rem 0.6rem; }
+  .faq-item { padding:0.5rem 0; }
+  .faq-q { font-size:0.68rem; }
+  .faq-a { font-size:0.72rem; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ========== 1. COVER ========== -->
+<section class="slide slide-html" style="background:radial-gradient(ellipse at center, #0E3D3A 0%, #0A2A28 60%, #071E1C 100%);">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-center"></div>
+  <div class="inner cover-hero">
+    <img src="assets/cc-reel-logo.png" alt="Clinic Catalyst" class="wordmark">
+    <h1>You bring the<br>natural results.<br><span class="teal">We bring the women.</span></h1>
+    <p style="max-width:500px; margin:1.5rem auto 2.5rem; font-size:1rem; color:var(--text-mid);">Prepared for Julia "Juls" Johnson<br>Simply Aesthetics JJ, Mornington</p>
+    <p class="date">8 June 2026</p>
+    <p class="prepared">By <strong>Kelly Wotherspoon</strong> &amp; <strong>Alicia Hagen</strong></p>
+  </div>
+  <div class="scroll-arrow" onclick="document.getElementById('deck').scrollBy({top:window.innerHeight,behavior:'smooth'})">
+    <span>Click to begin</span>
+    <div class="arrow">&#8595;</div>
+  </div>
+</section>
+
+<!-- ========== 2. SOCIAL PROOF ========== -->
+<section class="slide" style="padding:0; background:#000;">
+  <img src="assets/social-proof.png" alt="Clinics we've worked with" style="width:100%; height:100%; object-fit:contain;">
+</section>
+
+<!-- ========== 3. WHAT YOU'VE BUILT ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split" style="grid-template-columns:1fr 2fr; gap:2.5rem;">
+      <div style="text-align:center;">
+        <p class="label label-peach">Your clinic right now</p>
+        <h2 style="font-size:clamp(1.2rem,2.5vw,1.8rem);">What You've <span class="teal">Built Already</span></h2>
+        <p style="font-size:0.8rem; margin-top:0.5rem;">A solo nurse with 20+ years of clinical experience, a beautifully-curated brand, and a niche most clinics are missing entirely.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">20+ Years Clinical Experience</strong> - RN with cardiac and paeds background. You can't buy that level of trust. It's your biggest differentiator and it's barely surfaced anywhere.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">You ARE the Avatar</strong> - 47, perimenopausal, in the throes of it. Your clients already tell you "it's so nice to talk to someone about this." That's gold no competitor in Mornington can copy.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">Premium Brand on Instagram</strong> - your IG is dialled. Clean, considered, not "mass-produced slop." That's the asset everything else needs to live up to.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">Signature Style That Sells Itself</strong> - subtle, natural, 0.5ml results. Nobody can tell. In a market full of overdone faces, that's a magnet.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">Google Reviews Doing the Heavy Lifting</strong> - new clients keep referencing them. Currently your single best converting signal - and barely surfaced on the site.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;"><strong style="color:var(--white);">Real Word-of-Mouth Engine</strong> - existing clients referring consistently. The trust and quality are already there. We just need to plug an acquisition system in next to it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. GOALS & OBJECTIVES ========== -->
+<section class="slide slide-html alt">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Tailored for Simply Aesthetics JJ</p>
+    <h2>Your Goals &amp; <span class="teal">Objectives</span></h2>
+    <div style="max-width:800px; margin-top:1rem;">
+      <div class="card" style="padding:1.2rem; margin-bottom:0.8rem;"><h4>1. More New Clients Week-to-Week</h4><p>"More new clients. Space for lots of new clients. Core group of repeat clients but need more for week to week." You have the capacity and the chair - we fill it.</p></div>
+      <div class="card" style="padding:1.2rem; margin-bottom:0.8rem;"><h4>2. Own the Perimenopause Conversation in Mornington</h4><p>"I'm in the throes of it - clients say it's so nice to talk to someone about this." That's your differentiator and it's not on a single ad, page, or social post yet. We change that.</p></div>
+      <div class="card" style="padding:1.2rem; margin-bottom:0.8rem;"><h4>3. Make the Website Match the Instagram</h4><p>Your IG is premium. Your website is generic. Anyone clicking through meets a different brand - and that's the leak. One refresh, mobile-fixed, Juls-led, problem-focused pages.</p></div>
+      <div class="card" style="padding:1.2rem; margin-bottom:0.8rem;"><h4>4. Stop the Generic Ads, Start the Pain-Point Ones</h4><p>The current "$50 off" ad pulled one person. Beautiful photos, no hook. We swap it for perimenopause-led ads that speak to women who haven't found her yet.</p></div>
+      <div class="card" style="padding:1.2rem;"><h4>5. Get Off the Tools You Don't Enjoy</h4><p>"I just want someone to sit down with me and pay them for a day's work." That's exactly what 7-8 July is. You walk in tired of DM-juggling, walk out with the system running.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5. TASK 1 - ADVERTISING ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task One</span>
+        <h2>Advertising &amp; <span class="teal">Lead Generation</span></h2>
+        <div class="quote"><p>"The current $50 off ad pulled one person. Beautiful photos, no hook."</p></div>
+        <div style="display:grid; gap:0.6rem;">
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.75rem; min-width:130px; flex-shrink:0;">Perimenopause</span>
+            <span style="font-size:0.8rem; color:var(--text-mid);">Lead with the pain point - <span style="color:var(--teal-bright); font-weight:600;">"changing skin, hormonal shifts, finally being heard"</span><br>Target women 40-55 across Mornington Peninsula</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.75rem; min-width:130px; flex-shrink:0;">Natural Results</span>
+            <span style="font-size:0.8rem; color:var(--text-mid);">"Subtle, half-mil, nobody can tell" - <span style="color:var(--teal-bright); font-weight:600;">anti-overdone angle</span><br>For women who've been burned by frozen-face clinics</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.75rem; min-width:130px; flex-shrink:0;">Skin Needling</span>
+            <span style="font-size:0.8rem; color:var(--text-mid);">The treatment you want to grow - <span style="color:var(--teal-bright); font-weight:600;">gateway offer</span><br>Lower price point, brings new women into the room</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.75rem; min-width:130px; flex-shrink:0;">Google Ads</span>
+            <span style="font-size:0.8rem; color:var(--text-mid);">You've tried it - <span style="color:var(--teal-bright); font-weight:600;">never properly optimised</span><br>Own "cosmetic nurse Mornington" + perimenopause skin terms</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.75rem; min-width:130px; flex-shrink:0;">Remarketing</span>
+            <span style="font-size:0.8rem; color:var(--text-mid);">To your free consult <span style="color:var(--teal-bright); font-weight:600;">leading with 20+ years RN trust</span><br>Warm leads catch a soft offer they've already met</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img src="assets/ad-mockups-combined.png" alt="Ad mockups" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6. TASK 2 - WEBSITE ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Make the website match the Instagram</p>
+    <h2>Website &amp; <span class="teal">Local Search</span></h2>
+    <div style="max-width:850px;">
+      <div class="quote"><p>Your IG is premium. Your website is generic. Anyone clicking through meets a different brand - and that's the single biggest leak in the funnel.</p></div>
+      <ul style="list-style:none; padding:0; margin:0; max-width:780px;">
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Juls front and centre - 20+ years RN, perimenopausal herself, natural-results specialist</li>
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Fix the Wix mobile bug - the legacy 320px viewport is breaking the site for half your traffic</li>
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Problem-focused pages - "perimenopausal skin," "subtle anti-wrinkle," "natural ageing" - not just treatment lists</li>
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Surface your Google reviews on the homepage - they're already your best converting signal</li>
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> SEO + GEO for "cosmetic nurse Mornington," "perimenopause skin Mornington Peninsula"</li>
+        <li style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.5rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> AHPRA-compliant copy throughout - no risk wording, no compliance gaps</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 7. TASK 3 - CRM ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Three</span>
+        <h2>CRM &amp; <span class="teal">Lead Follow-Up</span></h2>
+        <div class="quote"><p>"I just want someone to sit down with me and pay them for a day's work."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> No CRM currently - Timely handles booking but nothing nurtures the leads that don't book</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Install a proper CRM at the workshop - your contacts in one place, every lead tracked, every follow-up automated</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Mailchimp newsletters become a real nurture sequence - perimenopause education, treatment journeys, rebooking prompts</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Layer SMS in (you've never used it) - higher open rates, faster bookings, gentle rebooking reminders</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Automated review collection after every treatment - keep that engine running on its own</li>
+        </ul>
+      </div>
+      <div>
+        <img src="assets/crm-nurture-mockup.png" alt="CRM and nurture sequence" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 8. TASK 4 - SKIN ASSESSMENT ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Four</span>
+        <h2>Perimenopause Skin <span class="teal">Quiz</span></h2>
+        <div class="quote"><p>"I'm in the throes of it - clients say it's so nice to talk to someone about this."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> 6 questions specifically built for women in perimenopause - hormonal skin changes, fine lines, hydration, jawline drop</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> They enter name, email, phone to see results - every quiz becomes a lead in your CRM automatically</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Sits on your website hero, Instagram bio, and Linktree - runs 24/7 while you're with clients</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Nurtured automatically with content tailored to their concern - they walk in already warm and pre-educated</li>
+        </ul>
+      </div>
+      <div>
+        <img src="assets/skin-assessment-mockup.png" alt="Skin assessment quiz" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 9. TASK 5 - AFTER-HOURS ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Five</span>
+        <h2>After-Hours <span class="teal">Automation</span></h2>
+        <div class="quote"><p>"Answering all the DMs yourself - not much time spent because mostly existing customers."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Once ads start working, DM volume jumps. This stops you drowning in it the day they hit</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Instant response under 60 seconds - pricing, availability, free consult booking link, all automated</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Instagram DMs at 9pm get caught not lost. Wednesday morning they're already in the pipeline</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Trained on YOUR treatments, YOUR pricing, YOUR voice - doesn't improvise, doesn't go rogue</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> You test it, try to break it, and approve it before it ever speaks to a client</li>
+        </ul>
+      </div>
+      <div>
+        <img src="assets/after-hours-automation.png" alt="After-hours automation" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 10. BONUS - PRIVATE B&A GALLERY ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Bonus</span>
+        <h2>Password-Protected <span class="peach">Injectable Gallery</span></h2>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> AHPRA restricts public injectable B&amp;As - but not after a consult</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Hidden gallery page behind a password wall on your refreshed website</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Password shared after consult (even telehealth qualifies)</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Builds confidence to proceed - compliant and professional</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Conversion tool at exactly the right stage of the journey</li>
+        </ul>
+      </div>
+      <div>
+        <img src="assets/ba-gallery-mockup.png" alt="Password-protected gallery" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 11. RETENTION ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Retention</span>
+        <h2>The Client <span class="peach">Never Leaves</span></h2>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> 48hr post-treatment SMS: "How's your skin feeling after Tuesday?" - shows you care, catches concerns</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Automated rebooking prompts - turns one-off appointments into 4-6 week regulars</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Birthday campaigns - automated, personalised, sent without anyone touching them</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Treatment journey emails - subtle filler today, skin needling next month, anti-wrinkle in 12 weeks</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Treatment plan tracking - flag every incomplete plan and lapsed mid-journey client</li>
+        </ul>
+        <p class="mt-1" style="font-size:0.85rem; color:var(--peach-light); font-weight:600;">They don't book once. They book again and again - not because you're chasing them, but because the system keeps them coming back.</p>
+      </div>
+      <div>
+        <img src="assets/cc-conference-stage.jpg" alt="Kelly and Alicia presenting" class="team-photo" style="max-height:400px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 12. STOP DOING EVERYTHING YOURSELF ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner" style="text-align:center;">
+    <p class="label label-peach">Sound familiar?</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.8rem); margin-bottom:1.5rem;">Stop Doing Everything <span class="peach">Yourself</span></h2>
+    <p style="max-width:650px; margin:0 auto 2rem; font-size:1rem;">Ad creation. Lead follow-up. DMs. Mailchimp. Wix tweaks. The socials you don't enjoy. A "one man band" stretched in five directions.</p>
+    <h2 style="font-size:clamp(1.2rem,3vw,2rem);">That's Where <span class="teal">We Step In</span></h2>
+    <p style="max-width:600px; margin:1rem auto 0; font-size:0.85rem;">Two paths to get there. Choose the one that fits how you want to grow.</p>
+  </div>
+</section>
+
+<!-- ========== 13. HATS WE TAKE OFF YOU ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split-even">
+      <div>
+        <p class="label label-peach">What we cover in 2 days</p>
+        <h2>The Hats We<br><span class="teal">Take Off You</span></h2>
+        <p style="margin-bottom:1.2rem;">So you're not in your DMs at 9pm.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Ad creative - you film, we build</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Ad copy - we teach you how</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google Ads strategy</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Lead capture under 5 min</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> After hours covered</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> CRM set up and run</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Nurture - email, SMS, DM</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Brand strategy handled</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> GEO / AI search sorted</div>
+        </div>
+        <p class="mt-1" style="font-size:0.85rem; color:var(--peach-light); font-weight:600;">The only hat left is the one you actually want to wear - the practitioner.</p>
+      </div>
+      <div>
+        <img src="assets/cc-conference-kelly-slide.jpg" alt="Kelly presenting" class="team-photo" style="max-height:420px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 14. CLIENT LIFECYCLE ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">The Full Client Lifecycle</p>
+    <h2>No One Falls <span class="teal">Through the Cracks</span></h2>
+    <div class="grid-3 mt-2">
+      <div class="vs-col vs-us" style="border-radius:10px;">
+        <h3 style="color:var(--teal-bright); font-size:0.8rem; margin-bottom:1.2rem;">Before They Book</h3>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Ads, content, lead capture</span></div>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">5-minute response time</span></div>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Nurture sequences until they book</span></div>
+      </div>
+      <div class="vs-col" style="background:rgba(232,168,124,0.06); border:1px solid rgba(232,168,124,0.2); border-radius:10px;">
+        <h3 style="color:var(--peach); font-size:0.8rem; margin-bottom:1.2rem;">While They're a Client</h3>
+        <div class="win-item"><span class="win-check" style="color:var(--peach);">&#10003;</span><span class="win-text">Treatment reminders</span></div>
+        <div class="win-item"><span class="win-check" style="color:var(--peach);">&#10003;</span><span class="win-text">Education content</span></div>
+        <div class="win-item"><span class="win-check" style="color:var(--peach);">&#10003;</span><span class="win-text">Positioning the clinic as the expert</span></div>
+      </div>
+      <div class="vs-col vs-us" style="border-radius:10px;">
+        <h3 style="color:var(--teal-bright); font-size:0.8rem; margin-bottom:1.2rem;">After Treatment</h3>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Rebooking automation</span></div>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Birthday campaigns</span></div>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Re-engagement sequences</span></div>
+        <div class="win-item"><span class="win-check">&#10003;</span><span class="win-text">Referral nudges</span></div>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:1.5rem; font-size:0.9rem; color:var(--peach-light); font-weight:600;">Your clients are nurtured into the clinic, throughout their treatment, and kept coming back.</p>
+  </div>
+</section>
+
+<!-- ========== 15. CAMPAIGN PROCESS ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">How it works</p>
+    <h2>From Stranger <span class="teal">to Booked Client</span></h2>
+    <p style="max-width:700px; margin-bottom:2rem;">Client responds to your ad on Facebook, Instagram or Google. They supply their details in exchange for your offer. From there, everything is automated.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1.2rem;">
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-ad.png" alt="Campaign" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>Campaign</h4>
+        <p>Targeted ad with a compelling offer reaches your ideal client</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-crm.png" alt="Into CRM" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>Into CRM</h4>
+        <p>Lead details captured instantly - name, phone, email - entered into your system</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-followup.png" alt="Follow Up" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>5-Day Follow Up</h4>
+        <p>Automated SMS, email and call sequences if they don't book immediately</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-booked.png" alt="Booked" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4 style="color:var(--peach);">Booked</h4>
+        <p>Deposit taken, appointment confirmed, client walks through your door</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: META ADS & LEAD FOLLOW UP ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">How it works</p>
+    <h2>Meta Ads &amp; <span class="teal">Lead Follow Up</span></h2>
+    <p style="max-width:700px; margin-bottom:1rem; font-size:0.85rem;">We do all the hard work. You wait for leads to come in and do what you're best at - providing an incredible service.</p>
+    <div class="split-even">
+      <div>
+        <h3 style="color:var(--peach); font-size:0.75rem; margin-bottom:0.6rem;">We take care of</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.2rem 1.2rem; margin-bottom:1rem;">
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Creating offers</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> SMS notifications &amp; credits</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Writing copy</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> CRM automations</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Content for ads</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Calling leads</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Setting up text</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Responding to leads</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Email notifications</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Technical setup</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Regulatory Compliance Certificate</div>
+          <div style="font-size:0.75rem; color:var(--text-mid); padding:0.15rem 0;"><span style="color:var(--teal-bright);">&#10003;</span> Ongoing support</div>
+        </div>
+        <div class="faq-item" style="padding:0.5rem 0;">
+          <p class="faq-q" style="font-size:0.72rem;">What should my ad spend be?</p>
+          <p class="faq-a" style="font-size:0.74rem;">$30/day minimum, paid directly to Meta on top of the weekly fee.</p>
+        </div>
+        <div class="faq-item" style="padding:0.5rem 0;">
+          <p class="faq-q" style="font-size:0.72rem;">Are calls, SMS &amp; emails included?</p>
+          <p class="faq-a" style="font-size:0.74rem;">Yep - all inclusive. Lead calling, SMS credits, email and CRM access. Regulatory Compliance Certificate handled.</p>
+        </div>
+        <div class="faq-item" style="padding:0.5rem 0;">
+          <p class="faq-q" style="font-size:0.72rem;">Do I have to make the videos?</p>
+          <p class="faq-a" style="font-size:0.74rem;">No. Send us raw footage and we'll edit. Authentic video and photos always perform best.</p>
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:center;">
+        <img src="assets/meta-ad-mockup-lush.png" alt="Sample Meta ad" style="width:100%; border-radius:8px; max-height:380px; object-fit:contain; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+        <div class="price-card" style="padding:1rem 1.2rem; text-align:center;">
+          <p class="price-period" style="margin-bottom:0.1rem;">Weekly</p>
+          <div style="font-family:'Montserrat',sans-serif; font-size:0.85rem; color:var(--text-faint); text-decoration:line-through; line-height:1;">$699/wk</div>
+          <div style="font-family:'Montserrat',sans-serif; font-size:1.7rem; font-weight:900; color:var(--teal-bright); margin-top:0.2rem;">$499<span style="font-size:0.5em; color:var(--text-mid); font-weight:600;">/wk</span></div>
+          <p style="font-size:0.6rem; color:var(--peach); margin-top:0.2rem; font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;">ABM Rate</p>
+          <p style="font-size:0.66rem; color:var(--text-faint); margin-top:0.4rem;">Setup $799<br>waived w/ Platinum</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: GOOGLE ADS MANAGEMENT ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Standalone Service</p>
+    <h2>Google Ads <span class="teal">Management</span></h2>
+    <div class="split-even" style="margin-top:1rem;">
+      <div>
+        <p style="font-size:0.82rem; margin-bottom:1rem;">Our team of certified professionals create, manage and optimise your Google Ads campaigns to ensure maximum ROI. Thorough keyword research, compelling ad copy, and advanced targeting to reach your ideal patients. Real-time analytics + detailed performance reports so we continuously refine your campaigns.</p>
+        <h3 style="color:var(--peach); font-size:0.75rem; margin-bottom:0.6rem;">Initial Setup Includes</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Landing page edits for conversion</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google Tag Manager setup</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google Analytics setup</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google Ads Manager setup</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Conversion tracking configured</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;">
+        <img src="assets/google-ads-dashboard.png" alt="Google Ads PPC dashboard with conversion tracking" style="max-height:380px; object-fit:contain; width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+        <div class="price-card" style="padding:1rem 1.5rem; width:100%;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem;">
+            <div style="text-align:left;">
+              <p class="price-period" style="margin-bottom:0.1rem;">Weekly</p>
+              <div style="font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:900; color:var(--teal-bright);">$299<span style="font-size:0.55em; color:var(--text-mid); font-weight:600;">/wk + GST</span></div>
+            </div>
+            <div style="text-align:right; border-left:1px solid rgba(255,255,255,0.1); padding-left:1rem;">
+              <p class="price-period" style="margin-bottom:0.1rem;">Setup</p>
+              <div style="font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:900; color:var(--peach);">$2,500</div>
+              <p style="font-size:0.58rem; color:var(--text-faint); font-style:italic; margin:0;">Waived with Platinum</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: LOCAL SEO & GEO ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">Standalone Service</p>
+    <h2>Local SEO &amp; <span class="teal">GEO</span></h2>
+    <div class="split-even" style="margin-top:1rem;">
+      <div>
+        <p style="font-size:0.82rem; margin-bottom:1rem;">Transform your online presence and get found where it matters - both on Google AND in the AI-powered search tools your clients are already using (ChatGPT, Claude, Perplexity, Google AI Overviews). One fresh blog article per month to keep your content relevant, thorough keyword research, and technical enhancements that drive organic traffic and increase visibility.</p>
+        <h3 style="color:var(--peach); font-size:0.75rem; margin-bottom:0.6rem;">Recommended Package Includes</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 10 target keywords</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Onsite SEO</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Offsite SEO + GEO (AI Search Optimisation)</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google My Business optimisation</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Manual high-quality backlinks</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Monthly performance report</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 1x blog article per month with GEO coded in</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;">
+        <img src="assets/seo-dashboard.png" alt="SEO performance dashboard - rankings, traffic, site audit, backlinks" style="max-height:480px; object-fit:contain; width:100%; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+        <div class="price-card" style="padding:1rem 1.5rem; text-align:center; width:100%;">
+          <p class="price-period" style="margin-bottom:0.2rem;">Recommended Package</p>
+          <div style="font-family:'Montserrat',sans-serif; font-size:1.8rem; font-weight:900; color:var(--teal-bright);">$299<span style="font-size:0.5em; color:var(--text-mid); font-weight:600;">/wk + GST</span></div>
+          <p style="font-size:0.7rem; color:var(--text-faint); margin-top:0.2rem;">+ GST</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: WEEKLY EMAIL & SMS MARKETING ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Standalone Service</p>
+    <h2>Weekly Email &amp; <span class="teal">SMS Marketing</span></h2>
+    <div class="split-even" style="margin-top:1rem;">
+      <div>
+        <p style="font-size:0.82rem; margin-bottom:1rem;">Your existing client base receives 2x branded newsletter &amp; SMS campaigns per month in your brand voice. Education about specific skin concerns and a MAXIMUM of two offers - to educate, drive engagement, and give your existing clients more understanding of what you can do for them. They may decide they want both treatment AND product pathways.</p>
+        <h3 style="color:var(--peach); font-size:0.75rem; margin-bottom:0.6rem;">Nurture &amp; Offers</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 2x branded email campaigns per month</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 2x SMS campaigns per month</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Written in your brand voice</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Aligned with organic AND paid ads strategy</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Maximum 2 offers per month (no fatigue)</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Education-led to deepen client understanding</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem;">
+        <div style="position:relative; width:100%; height:400px;">
+          <img src="assets/newsletter-education-cropped.jpg" alt="Newsletter - education" style="position:absolute; left:10%; top:30px; width:38%; max-height:340px; object-fit:cover; object-position:top; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,0.45); transform:rotate(-10deg); z-index:1;">
+          <img src="assets/newsletter-close-cropped.jpg" alt="Newsletter - close" style="position:absolute; left:52%; top:30px; width:38%; max-height:340px; object-fit:cover; object-position:top; border-radius:8px; box-shadow:0 4px 18px rgba(0,0,0,0.45); transform:rotate(10deg); z-index:2;">
+          <img src="assets/newsletter-hook-cropped.jpg" alt="Newsletter - hook (winter skin season)" style="position:absolute; left:28%; top:0; width:46%; max-height:400px; object-fit:cover; object-position:top; border-radius:8px; box-shadow:0 8px 28px rgba(0,0,0,0.6); transform:rotate(0deg); z-index:3;">
+        </div>
+        <div class="price-card" style="padding:1rem 1.5rem; text-align:center; width:100%;">
+          <p class="price-period" style="margin-bottom:0.2rem;">Weekly Subscription</p>
+          <div style="font-family:'Montserrat',sans-serif; font-size:1.8rem; font-weight:900; color:var(--teal-bright);">$50<span style="font-size:0.5em; color:var(--text-mid); font-weight:600;">/wk + GST</span></div>
+          <p style="font-size:0.7rem; color:var(--text-faint); margin-top:0.2rem;">No setup fee</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: SOCIAL MEDIA MANAGEMENT ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">Standalone Service</p>
+    <h2>Organic Social <span class="teal">Media Management</span></h2>
+    <div class="split-even" style="margin-top:1rem;">
+      <div>
+        <p style="font-size:0.82rem; margin-bottom:1rem;">Elevate your brand's social media presence with our Social Media Management service. Three engaging posts per week and one custom reel, complete with targeted hashtags to maximise reach and engagement. Every six weeks our team visits your clinic to capture fresh, high-quality content - ensuring your social media stays vibrant and up to date.</p>
+        <h3 style="color:var(--peach); font-size:0.75rem; margin-bottom:0.6rem;">Weekly Deliverables</h3>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 3 engaging posts per week</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 1 custom reel per week</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Targeted hashtag research</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Every 6 weeks - in-clinic content capture visit</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Strategy aligned with offers &amp; ad campaigns</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Engagement &amp; community building</li>
+        </ul>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; width:100%; max-width:380px;">
+          <img src="assets/social-instagram-phone.png" alt="Instagram profile" style="width:100%; border-radius:6px; object-fit:contain; max-height:420px; box-shadow:0 4px 18px rgba(0,0,0,0.4);">
+          <img src="assets/social-reel-phone.png" alt="Reel" style="width:100%; border-radius:6px; object-fit:contain; max-height:420px; box-shadow:0 4px 18px rgba(0,0,0,0.4);">
+        </div>
+        <div class="price-card" style="padding:1rem 1.5rem; width:100%;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem;">
+            <div style="text-align:left;">
+              <p class="price-period" style="margin-bottom:0.1rem;">Weekly</p>
+              <div style="font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:900; color:var(--teal-bright);">$330<span style="font-size:0.55em; color:var(--text-mid); font-weight:600;">/wk + GST</span></div>
+            </div>
+            <div style="text-align:right; border-left:1px solid rgba(255,255,255,0.1); padding-left:1rem;">
+              <p class="price-period" style="margin-bottom:0.1rem;">Setup</p>
+              <div style="font-family:'Montserrat',sans-serif; font-size:1.3rem; font-weight:900; color:var(--peach);">$899</div>
+              <p style="font-size:0.55rem; color:var(--text-faint); font-style:italic; margin:0;">FREE w/ another service</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STANDALONE: SOCIAL MEDIA REPORTING ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Standalone Service</p>
+    <h2>Social Media <span class="teal">Reporting</span></h2>
+    <p style="max-width:780px; margin-bottom:1.5rem; font-size:0.85rem;">Every social media client receives a monthly performance report - audience growth, engagement, organic vs paid reach, and demographic breakdowns. Real numbers so you know exactly what's working and where to invest next.</p>
+    <div style="text-align:center;">
+      <img src="assets/social-analytics-dashboard.png" alt="Social Report - Total Likes, Audience Growth, Age and Gender breakdown" style="max-width:560px; width:100%; border-radius:10px; box-shadow:0 6px 28px rgba(0,0,0,0.45);">
+    </div>
+  </div>
+</section>
+
+<!-- ========== PLATINUM GROWTH PACKAGE ========== -->
+<section class="slide slide-html alt">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div style="text-align:center; margin-bottom:1.2rem;">
+      <p class="label">Everything Included</p>
+      <h2>Platinum <span class="teal">Growth Package</span></h2>
+      <p style="max-width:600px; margin:0 auto; font-size:0.82rem;">Your complete done-for-you patient acquisition system. Ads. Content. Follow Up. Conversions. Retention. <span class="peach">Everything handled for you under one strategy.</span></p>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; max-width:1000px; margin:0 auto 1rem;">
+      <div class="card" style="padding:0.9rem;">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem;">Meta Ads &amp; Lead Follow Up</h4>
+        <p style="font-size:0.62rem; color:var(--text-faint); line-height:1.5; margin:0;">Calls, Emails &amp; SMS</p>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Offer creation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Copywriting</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Video editing</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Landing page creation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Strategic Meta ad campaigns</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Calls, SMS &amp; email follow up</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Lead nurture &amp; conversion</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem;">Google Ads Management</h4>
+        <p style="font-size:0.62rem; color:var(--text-faint); line-height:1.5; margin:0;">High-intent search</p>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> High-intent search campaigns</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Keyword strategy</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Ad copywriting</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Landing page optimisation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Conversion tracking</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Ongoing optimisation &amp; reporting</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Maximise ROI &amp; bookings</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem;">Social Media Management</h4>
+        <p style="font-size:0.62rem; color:var(--text-faint); line-height:1.5; margin:0;">Organic content</p>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Reel editing</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Caption writing</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Content posting</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Strategy &amp; campaign alignment</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Consistent brand presence</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Engagement &amp; community</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem;">SEO &amp; GEO</h4>
+        <p style="font-size:0.62rem; color:var(--text-faint); line-height:1.5; margin:0;">Google + AI search</p>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Website SEO optimisation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> SEO metadata implementation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> GEO targeting</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Google &amp; Maps optimisation</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> AI Search (ChatGPT) visibility</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Long-term organic growth</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem;">Direct Email &amp; SMS</h4>
+        <p style="font-size:0.62rem; color:var(--text-faint); line-height:1.5; margin:0;">Database marketing</p>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Automated nurture sequences</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Promotional campaigns</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Reactivation of old leads</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Increase rebookings &amp; retention</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.5;"><span style="color:var(--teal-bright);">&#10003;</span> Improve patient lifetime value</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem; background:rgba(232,168,124,0.05); border-color:rgba(232,168,124,0.2);">
+        <h4 style="font-size:0.7rem; margin-bottom:0.5rem; color:var(--peach);">Why Clinics Choose Us</h4>
+        <ul style="list-style:none; padding:0; margin:0.5rem 0 0;">
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.6;"><span style="color:var(--peach);">&#9889;</span> Fast Lead Response</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.6;"><span style="color:var(--peach);">&#128200;</span> High-Converting Offers</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.6;"><span style="color:var(--peach);">&#127916;</span> Professional Video Ads</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.6;"><span style="color:var(--peach);">&#127919;</span> Conversion-Focused Systems</li>
+          <li style="font-size:0.65rem; color:var(--text-mid); line-height:1.6;"><span style="color:var(--peach);">&#128101;</span> Long-Term Patient Retention</li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center; font-family:'Montserrat',sans-serif; font-size:0.95rem; font-weight:800; color:var(--text-mid); margin-top:0.8rem;">TOTAL VALUE <span style="text-decoration:line-through; color:var(--text-faint);">$1,677</span> <span class="teal">per week</span></p>
+  </div>
+</section>
+
+<!-- ========== THE INVESTMENT ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner" style="text-align:center;">
+    <p class="label label-peach">The Investment</p>
+    <h2>All of This. <span class="peach">One Price.</span></h2>
+    <div style="max-width:520px; margin:1.5rem auto 0;">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.8rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <span style="font-family:'Montserrat',sans-serif; font-size:0.8rem; font-weight:700; color:var(--text-mid);">Total weekly value</span>
+        <span style="font-family:'Montserrat',sans-serif; font-size:1.2rem; font-weight:900; color:var(--text-faint); text-decoration:line-through;">$1,677/wk</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <span style="font-family:'Montserrat',sans-serif; font-size:0.8rem; font-weight:700; color:var(--text-mid);">Setup &amp; onboarding</span>
+        <span style="font-family:'Montserrat',sans-serif; font-size:0.95rem; font-weight:700; color:var(--text-faint); text-decoration:line-through;">$4,997 WAIVED</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; padding:0.7rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <div style="text-align:left;">
+          <p style="font-family:'Montserrat',sans-serif; font-size:0.8rem; font-weight:700; color:var(--text-mid); margin:0;">Google Ads Setup</p>
+          <p style="font-size:0.6rem; color:var(--text-faint); margin:0.2rem 0 0; line-height:1.4;">Landing page edits + Google Tag Manager + Google Analytics + Google Ads Manager</p>
+        </div>
+        <span style="font-family:'Montserrat',sans-serif; font-size:0.95rem; font-weight:700; color:var(--peach); white-space:nowrap;">$2,500</span>
+      </div>
+      <div style="margin-top:1.5rem; padding:1.6rem; background:rgba(0,212,188,0.08); border:2px solid var(--teal-bright); border-radius:12px;">
+        <p style="font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--peach); margin-bottom:0.4rem;">Your Price</p>
+        <div style="font-family:'Montserrat',sans-serif; font-size:clamp(2.2rem,5vw,3.2rem); font-weight:900; color:var(--teal-bright);">$999<span style="font-size:0.4em; color:var(--text-mid); font-weight:600;">/week + GST</span></div>
+        <p style="font-size:0.72rem; color:var(--text-faint); margin-top:0.4rem;">ABM member rate &middot; $4,997 setup fee waived</p>
+        <div style="margin-top:1rem; display:inline-block; background:var(--peach); color:var(--dark); font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:800; padding:0.35rem 1rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em;">Save $678/wk + $4,997 setup</div>
+      </div>
+      <p style="font-size:0.65rem; color:var(--text-faint); margin-top:0.8rem; font-style:italic;">Ad spend separate, paid directly to Meta. $30/day minimum recommended.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 18. WORKSHOP + WEBSITE (OUR RECOMMENDATION) ========== -->
+<section class="slide slide-html" style="background:radial-gradient(ellipse at center, #0E3D3A 0%, #0A2A28 60%, #071E1C 100%);">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <p class="label label-peach">You're In</p>
+      <h2>Let's Make <span class="peach">7-8 July</span> <span class="teal">Count</span></h2>
+      <p style="max-width:620px; margin:0 auto;">Your seat is locked in. You walk into Melbourne with the audit fresh, the perimenopause angle clarified, and exactly what we're going to build together over two days.</p>
+    </div>
+    <div style="max-width:620px; margin:0 auto; padding:2rem; background:rgba(0,180,160,0.06); border:2px solid var(--teal); border-radius:12px;">
+      <p style="font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--teal-bright); margin-bottom:0.4rem; text-align:center;">2-Day Intensive Workshop</p>
+      <p style="text-align:center; font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:800; color:var(--peach); margin-bottom:0.3rem;">7-8 July 2026 &middot; Melbourne CBD</p>
+      <p style="text-align:center; font-size:0.8rem; color:var(--text-faint); margin-bottom:1.2rem;">Bring your laptop. Walk out running.</p>
+      <p style="font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--teal-bright); margin-bottom:0.6rem;">What we'll build together</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem 1.2rem;">
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Perimenopause-led Meta ads live</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Google Ads optimised &amp; running</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> CRM installed + Timely connected</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Mailchimp nurture sequence built</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Perimenopause skin quiz live</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> SMS marketing set up</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> After-hours DM automation</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Wix mobile fix + Juls-led homepage</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> AI tools configured for your clinic</div>
+        <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Review request automation</div>
+      </div>
+      <p style="text-align:center; margin-top:1.2rem; font-size:0.85rem; color:var(--peach-light); font-weight:600;">You walk in tired of DM-juggling. You walk out with the engine running.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 17. YOUR PART ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label label-peach">Team effort</p>
+    <h2>Your Part in <span class="teal">the Success</span></h2>
+    <p style="max-width:700px; margin-bottom:1.5rem;">We can't control every aspect of your business. The overall success comes down to a team effort. Here's what we need from you.</p>
+    <div class="grid-2">
+      <div class="card" style="padding:1.2rem;">
+        <h4>Post Before &amp; After Images</h4>
+        <p>New leads stalk your IG before they book. It takes 6-9 interactions before someone buys - your subtle, natural B&amp;As do the convincing.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Deliver the Experience</h4>
+        <p>The system gets them through the door. From there, it's Juls' 20+ years of clinical experience that turns a first visit into a lifelong client.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Create an Experience</h4>
+        <p>Is the room clean, welcoming, warm? Does the perimenopause conversation feel safe? That experience is what turns one visit into a referring client.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Upsell &amp; Rebook</h4>
+        <p>Turn bookings into long-term clients. Ask what day works best to rebook - not if they want to. That's where the real revenue lives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 18. CASE STUDIES ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Proven results</p>
+    <h2>Case <span class="teal">Studies</span></h2>
+    <div class="grid-2" style="margin-top:1.5rem;">
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem;">
+          <img src="assets/case-study-1-logo.png" alt="Case Study 1" style="height:60px; object-fit:contain; flex-shrink:0;">
+          <p class="label label-peach" style="margin-bottom:0;">Case Study 01</p>
+        </div>
+        <div class="stat-number" style="font-size:1.8rem; margin-bottom:0.5rem;">34% Conversion</div>
+        <p style="font-size:0.85rem; margin-bottom:0.3rem;">on new leads</p>
+        <p style="font-size:0.85rem; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); font-weight:700;">$4,976</span> in new bookings in first 30 days</p>
+        <p style="font-size:0.85rem;"><span style="color:var(--peach); font-weight:700;">$3,537</span> of future bookings</p>
+      </div>
+      <div class="card" style="padding:1.5rem;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem;">
+          <img src="assets/case-study-2-logo.png" alt="Case Study 2" style="height:60px; object-fit:contain; flex-shrink:0;">
+          <p class="label label-peach" style="margin-bottom:0;">Case Study 02</p>
+        </div>
+        <div class="stat-number" style="font-size:1.8rem; margin-bottom:0.5rem;">48.48% Conversion</div>
+        <p style="font-size:0.85rem; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); font-weight:700;">$7,652</span> new bookings</p>
+        <p style="font-size:0.85rem;"><span style="color:var(--peach); font-weight:700;">$8,241</span> in future bookings</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 19. SIGN-ON BONUS - CLAUDE WORKSHOP ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div style="text-align:center; max-width:800px; margin:0 auto;">
+      <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Sign On Bonus</span>
+      <h2 style="margin-top:1rem;">Start Saving Hours <span class="peach">Today</span></h2>
+      <p style="font-size:1rem; margin-bottom:2rem;">You're locked in for 7-8 July - and from today you also get our pre-recorded Claude workshop and full setup walkthrough. Start reclaiming time before Melbourne even begins.</p>
+      <div class="card" style="background:rgba(0,0,0,0.15); border-color:rgba(255,255,255,0.1); text-align:left; max-width:600px; margin:0 auto; padding:1.5rem;">
+        <h4 style="color:var(--peach); margin-bottom:1rem;">AI the Easy Way - Pre-Recorded Workshop + Setup Walkthrough</h4>
+        <div style="display:flex; flex-direction:column; gap:0.6rem;">
+          <div style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Pre-recorded workshop you can watch on your own time</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Step-by-step Claude setup walkthrough - get it running correctly from day one</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> 4 ready-made skills - content repurposer, client email writer, sales and marketing copy, branded link tree builder</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.85rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> You can start using it from this week</div>
+        </div>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.95rem; color:var(--peach-light); font-weight:600;">You walk away from this call with something useful in your hands - before we've even started.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 20. READY TO START ========== -->
+<section class="slide slide-html" style="background:radial-gradient(ellipse at center, #0E3D3A 0%, #071E1C 100%);">
+  <div class="dot-overlay" style="opacity:0.03;"></div>
+  <div class="glow glow-center" style="opacity:0.12;"></div>
+  <div class="inner" style="text-align:center;">
+    <img src="assets/cc-reel-logo.png" alt="Clinic Catalyst" style="height:36px; margin-bottom:2rem; opacity:0.8;">
+    <h2 style="font-size:clamp(1.8rem,4vw,3rem); margin-bottom:1rem;">You bring the<br>natural results.<br><span class="teal">We bring the women.</span></h2>
+    <p style="max-width:600px; margin:0 auto 2rem; font-size:1rem;">Two days in Melbourne. The perimenopause conversation finally owned. And a clinic that fills its week-to-week chair without you in your DMs at 9pm.</p>
+    <img src="assets/cc-conference-kelly-slide.jpg" alt="Kelly presenting" style="width:280px; border-radius:12px; border:2px solid rgba(0,180,160,0.2); object-fit:cover; object-position:center top; max-height:200px;">
+    <p style="font-size:0.75rem; color:var(--text-faint); margin-top:1rem;">Kelly Wotherspoon &amp; Alicia Hagen</p>
+  </div>
+</section>
+
+<!-- ========== 21. PROJECT ACCEPTANCE ========== -->
+<section class="slide slide-html">
+  <div class="dot-overlay"></div>
+  <div class="inner">
+    <p class="label">Final step</p>
+    <h2>Project <span class="teal">Acceptance</span></h2>
+    <p style="max-width:700px;">This audit + recommendations document remains confidential between Mint Peach Media and <strong>Simply Aesthetics JJ</strong> and must not be disclosed to any third party without written approval of Mint Peach Media.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-top:2rem;">
+      <div class="card">
+        <h4>Your Workshop</h4>
+        <p>Seat confirmed for 7-8 July 2026, Melbourne CBD. Bring your laptop, a glass of wine, and the willingness to ditch what's not working.</p>
+      </div>
+      <div class="card">
+        <h4>Pre-Workshop Prep</h4>
+        <p>Watch the pre-recorded Claude walkthrough. Send through your current ad account + Mailchimp access so we can audit in advance.</p>
+      </div>
+      <div class="card">
+        <h4>After the Workshop</h4>
+        <p>Everything in this deck will be live and running on your clinic. The system runs itself - we just hand you the keys.</p>
+      </div>
+    </div>
+    <div style="margin-top:2rem; max-width:600px;">
+      <div style="display:grid; grid-template-columns:2fr 1fr; gap:1.5rem; align-items:end;">
+        <div>
+          <p class="sig-label" style="margin-bottom:0.4rem;">Sign below</p>
+          <div style="position:relative; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:8px; overflow:hidden;">
+            <canvas id="sig-canvas" width="400" height="140" style="width:100%; height:140px; cursor:crosshair; display:block; touch-action:none;"></canvas>
+            <button onclick="clearSig()" style="position:absolute; top:6px; right:6px; background:rgba(255,255,255,0.1); border:none; color:var(--text-faint); font-size:0.6rem; padding:3px 8px; border-radius:3px; cursor:pointer; font-family:'Montserrat',sans-serif;">Clear</button>
+          </div>
+          <input id="sig-name" type="text" placeholder="Full name" style="margin-top:0.6rem; width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:0.7rem 1rem; font-size:0.85rem; color:var(--white); font-family:'Open Sans',sans-serif; outline:none;">
+        </div>
+        <div>
+          <p class="sig-label" style="margin-bottom:0.4rem;">Date</p>
+          <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:0.8rem 1rem; font-size:0.85rem; color:var(--text-mid);" id="sig-date"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="slide-counter" id="counter"></div>
+<div class="nav-hint">Scroll or arrow keys to navigate</div>
+
+<script>
+const deck = document.getElementById('deck');
+const counter = document.getElementById('counter');
+const slides = document.querySelectorAll('.slide');
+function updateCounter() {
+  const idx = Math.round(deck.scrollTop / window.innerHeight) + 1;
+  counter.textContent = idx + ' / ' + slides.length;
+}
+deck.addEventListener('scroll', updateCounter);
+updateCounter();
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); deck.scrollBy({top:window.innerHeight, behavior:'smooth'}); }
+  if (e.key === 'ArrowUp') { e.preventDefault(); deck.scrollBy({top:-window.innerHeight, behavior:'smooth'}); }
+});
+
+const canvas = document.getElementById('sig-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  ctx.strokeStyle = '#00D4BC';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return { x: (t.clientX - r.left) * (canvas.width / r.width), y: (t.clientY - r.top) * (canvas.height / r.height) };
+  }
+  canvas.addEventListener('mousedown', e => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, {passive:false});
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, {passive:false});
+  canvas.addEventListener('touchend', () => drawing = false);
+}
+function clearSig() { const c = document.getElementById('sig-canvas'); c.getContext('2d').clearRect(0,0,c.width,c.height); }
+
+const d = new Date();
+document.getElementById('sig-date').textContent = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+</script>
+</body>
+</html>
