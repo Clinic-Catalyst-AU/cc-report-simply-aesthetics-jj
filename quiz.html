@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perimenopause Skin Quiz – Simply Aesthetics JJ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #FAF8F4;
+      --warm-white: #FFFFFF;
+      --sage: #8A9E8C;
+      --sage-light: #B5C7B7;
+      --sage-bg: #EFF4EF;
+      --charcoal: #2C2C2C;
+      --mid: #6B6B6B;
+      --faint: #9E9E9E;
+      --accent: #C4A882;
+      --accent-light: #F0E8DC;
+      --border: #E4E0DA;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--cream);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--charcoal);
+    }
+
+    /* ── Layout ── */
+    .shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem 4rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 640px;
+      background: var(--warm-white);
+      border-radius: 20px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.07);
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    .card-header {
+      background: var(--sage);
+      padding: 2.5rem 2.5rem 2rem;
+      text-align: center;
+    }
+    .clinic-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1rem;
+    }
+    .card-header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+    .card-header p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      padding: 1.2rem 2.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .progress-bar {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--sage);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+    .progress-text {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--faint);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    /* ── Question body ── */
+    .card-body {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .question-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.6rem;
+    }
+    .question-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1.4;
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── Options ── */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.95rem 1.2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    .option:hover {
+      border-color: var(--sage-light);
+      background: var(--sage-bg);
+    }
+    .option.selected {
+      border-color: var(--sage);
+      background: var(--sage-bg);
+    }
+    .option-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .option.selected .option-dot {
+      border-color: var(--sage);
+      background: var(--sage);
+    }
+    .option.selected .option-dot::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .option-text {
+      font-size: 0.85rem;
+      color: var(--charcoal);
+      line-height: 1.4;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--faint);
+      cursor: pointer;
+      padding: 0.5rem 0;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--charcoal); }
+    .btn-back:disabled { opacity: 0; pointer-events: none; }
+    .btn-next {
+      background: var(--sage);
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .btn-next:hover { background: #79907B; }
+    .btn-next:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Lead capture ── */
+    .capture-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+    .capture-sub {
+      font-size: 0.78rem;
+      color: var(--mid);
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 0.4rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      color: var(--charcoal);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--sage);
+    }
+    .form-group input::placeholder { color: var(--faint); }
+    .privacy-note {
+      font-size: 0.65rem;
+      color: var(--faint);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--sage);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 1.2rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #79907B; }
+
+    /* ── Results ── */
+    .result-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .result-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
+    .result-summary {
+      font-size: 0.85rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
+    .result-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .result-points li {
+      display: flex;
+      gap: 0.7rem;
+      font-size: 0.82rem;
+      color: var(--charcoal);
+      line-height: 1.5;
+    }
+    .result-points li::before {
+      content: '✓';
+      color: var(--sage);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .cta-box {
+      background: var(--sage-bg);
+      border: 1.5px solid var(--sage-light);
+      border-radius: 14px;
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .cta-box p.cta-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.5rem;
+    }
+    .cta-box p.cta-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .cta-box p.cta-sub {
+      font-size: 0.75rem;
+      color: var(--mid);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .btn-cta {
+      display: inline-block;
+      background: var(--sage);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 2.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #79907B; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1.8rem 0;
+    }
+
+    /* ── Utility ── */
+    .hidden { display: none !important; }
+
+    /* ── Mobile ── */
+    @media (max-width: 500px) {
+      .shell { padding: 1.5rem 1rem 3rem; }
+      .card-header { padding: 2rem 1.5rem 1.5rem; }
+      .card-body { padding: 1.5rem 1.5rem 2rem; }
+      .progress-wrap { padding: 1.2rem 1.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="card">
+
+    <!-- Header -->
+    <div class="card-header">
+      <p class="clinic-name">Simply Aesthetics JJ &bull; Mornington</p>
+      <h1>Is your skin telling you<br>something about your hormones?</h1>
+      <p>Answer 6 quick questions to find out what your skin is actually going through - and what can help.</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <span class="progress-text" id="progressText">1 of 6</span>
+    </div>
+
+    <!-- Questions -->
+    <div class="card-body" id="quizBody">
+
+      <!-- Q1 -->
+      <div class="question-block" data-q="0">
+        <p class="question-label">Question 1 of 6</p>
+        <p class="question-text">How has your skin changed in the last 12 months?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">More dry and dull - it's lost that glow I used to have</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Fine lines deepening, especially around my mouth and eyes</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I've noticed loss of volume or my jawline isn't as defined</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Breakouts or congestion I haven't had since my 20s</span></label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block hidden" data-q="1">
+        <p class="question-label">Question 2 of 6</p>
+        <p class="question-text">Where would you say you are in your hormonal journey?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">Early signs - I'm in my 40s and things are starting to shift</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Mid perimenopause - the changes are real and happening now</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Post-menopause - I'm looking to address what's changed</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I haven't fully connected my skin to my hormones yet</span></label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block hidden" data-q="2">
+        <p class="question-label">Question 3 of 6</p>
+        <p class="question-text">What bothers you most when you look in the mirror?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">Texture, dehydration and that flat, tired look</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Fine lines and the visible signs of ageing</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Loss of volume in cheeks and along my jawline</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I look tired even when I'm not - I just want to look refreshed</span></label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block hidden" data-q="3">
+        <p class="question-label">Question 4 of 6</p>
+        <p class="question-text">What's your relationship with cosmetic treatments?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">Curious but nervous - I want natural results, not frozen or overdone</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I've tried things before but want something more subtle and bespoke</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I'm ready - I just need someone who actually understands perimenopausal skin</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">I'd never want anyone to be able to tell - it has to look completely natural</span></label>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block hidden" data-q="4">
+        <p class="question-label">Question 5 of 6</p>
+        <p class="question-text">How much is your skin affecting how you feel day to day?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">A lot - I avoid photos and don't feel like myself</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Moderately - I notice it but I function fine, I just want to feel better</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Not too much - I'm proactive and want to stay ahead of further changes</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">It's more physical than emotional - it's uncomfortable or itchy/dry</span></label>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block hidden" data-q="5">
+        <p class="question-label">Question 6 of 6</p>
+        <p class="question-text">What would you most love to walk away from a consult knowing?</p>
+        <div class="options">
+          <label class="option"><span class="option-dot"></span><span class="option-text">Exactly what treatment would suit me and why</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">A realistic plan that won't make me look like someone else</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">Confidence that I won't look overdone or regret it</span></label>
+          <label class="option"><span class="option-dot"></span><span class="option-text">That someone finally gets what I'm going through hormonally</span></label>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="nav" id="quizNav">
+        <button class="btn-back" id="btnBack" disabled>&#8592; Back</button>
+        <button class="btn-next" id="btnNext" disabled>Next &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Lead capture -->
+    <div class="card-body hidden" id="captureBody">
+      <p class="capture-intro">You're almost there - where should we send your results?</p>
+      <p class="capture-sub">Based on your answers, we've put together a personalised overview of what's happening with your skin and what can help. Enter your details below to see it.</p>
+      <div class="form-group">
+        <label>First name</label>
+        <input type="text" id="fname" placeholder="Your first name" autocomplete="given-name">
+      </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" id="femail" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Mobile number</label>
+        <input type="tel" id="fphone" placeholder="0400 000 000" autocomplete="tel">
+      </div>
+      <button class="btn-submit" id="btnSubmit">See my results &rarr;</button>
+      <p class="privacy-note">Your details are kept private and will never be shared. You'll hear from Juls directly - no automated spam.</p>
+    </div>
+
+    <!-- Results -->
+    <div class="card-body hidden" id="resultsBody">
+      <span class="result-badge" id="resultBadge">Your Skin Profile</span>
+      <p class="result-heading" id="resultHeading"></p>
+      <p class="result-summary" id="resultSummary"></p>
+      <ul class="result-points" id="resultPoints"></ul>
+      <div class="divider"></div>
+      <div class="cta-box">
+        <p class="cta-label">Next step</p>
+        <p class="cta-text">Book a free consultation with Juls</p>
+        <p class="cta-sub">20 minutes. No obligation. No hard sell.<br>Just an honest conversation about your skin and your options.</p>
+        <a href="https://simplyaestheticsjj.au1.cliniko.com/bookings" class="btn-cta" target="_blank">Book my free consult</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const questions = document.querySelectorAll('.question-block');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const btnBack = document.getElementById('btnBack');
+  const btnNext = document.getElementById('btnNext');
+  const quizBody = document.getElementById('quizBody');
+  const captureBody = document.getElementById('captureBody');
+  const resultsBody = document.getElementById('resultsBody');
+  const progressWrap = document.getElementById('progressWrap');
+
+  let current = 0;
+  const answers = new Array(questions.length).fill(null);
+
+  function getSelected(qIndex) {
+    return questions[qIndex].querySelector('.option.selected');
+  }
+
+  function updateNav() {
+    btnBack.disabled = current === 0;
+    btnNext.disabled = !getSelected(current);
+    btnNext.textContent = current === questions.length - 1 ? 'See results →' : 'Next →';
+  }
+
+  function updateProgress() {
+    const pct = ((current + 1) / questions.length) * 100;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = (current + 1) + ' of ' + questions.length;
+  }
+
+  function showQ(index) {
+    questions.forEach((q, i) => q.classList.toggle('hidden', i !== index));
+    current = index;
+    updateProgress();
+    updateNav();
+  }
+
+  questions.forEach((qBlock, qi) => {
+    qBlock.querySelectorAll('.option').forEach((opt, oi) => {
+      opt.addEventListener('click', () => {
+        qBlock.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        answers[qi] = oi;
+        updateNav();
+      });
+    });
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (!getSelected(current)) return;
+    if (current < questions.length - 1) {
+      showQ(current + 1);
+    } else {
+      // Move to lead capture
+      quizBody.classList.add('hidden');
+      progressWrap.classList.add('hidden');
+      captureBody.classList.remove('hidden');
+    }
+  });
+
+  btnBack.addEventListener('click', () => {
+    if (current > 0) showQ(current - 1);
+  });
+
+  document.getElementById('btnSubmit').addEventListener('click', () => {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    if (!name || !email || !phone) {
+      alert('Please fill in all three fields to see your results.');
+      return;
+    }
+    showResults(name, answers);
+  });
+
+  function showResults(name, ans) {
+    captureBody.classList.add('hidden');
+
+    // Simple scoring: Q2 (hormonal stage) + Q3 (main concern) drive the result
+    const stage = ans[1]; // 0=early, 1=mid, 2=post, 3=not connected
+    const concern = ans[2]; // 0=texture/dull, 1=fine lines, 2=volume/jawline, 3=tired
+
+    let heading, summary, points;
+
+    if (concern === 2 || stage === 2) {
+      // Volume/structure focus
+      heading = `${name}, your skin is asking for volume and structure back.`;
+      summary = `The changes you're describing - loss of definition, shifting contours - are hallmarks of the hormonal transition. Collagen and fat pads shift. The good news is this is one of the most addressable things we work with, and it doesn't take much to restore what's been lost when it's done subtly.`;
+      points = [
+        'Collagen and volume loss accelerates in perimenopause and post-menopause',
+        'Subtle filler in the right places restores structure without looking done',
+        'Your Google reviews suggest women already trust Juls\'s natural approach',
+        'A free consult is the best way to see exactly what would help you'
+      ];
+    } else if (concern === 1 || stage === 1) {
+      // Fine lines, mid-perimenopause
+      heading = `${name}, your skin is going through a real hormonal shift right now.`;
+      summary = `Fine lines deepening and that mid-perimenopause change you're feeling aren't something skincare can fully address - the hormonal influence is too strong. The right cosmetic approach targets exactly this phase, using anti-wrinkle treatments that look completely natural and work with where you are, not against it.`;
+      points = [
+        'Mid-perimenopause is peak time for fine line acceleration',
+        'Subtle anti-wrinkle treatment softens without freezing expression',
+        'Juls specialises in the natural, nobody-can-tell result',
+        'Half a mil makes a bigger difference than most people expect'
+      ];
+    } else if (concern === 0 || stage === 0) {
+      // Texture/glow, early signs
+      heading = `${name}, your skin is signalling the start of a hormonal shift.`;
+      summary = `That dullness and loss of glow you're noticing is one of the first signs of changing oestrogen levels affecting skin hydration and cell turnover. You're in the perfect window to get ahead of it - early intervention means you're maintaining, not catching up, and the results feel completely natural.`;
+      points = [
+        'Skin needling is an ideal treatment for texture and glow at this stage',
+        'It stimulates collagen production right when your body starts producing less',
+        'Low price point, no downtime, visible results after one session',
+        'A great starting point if you\'re new to cosmetic treatments'
+      ];
+    } else {
+      // Tired look, not sure
+      heading = `${name}, looking tired when you're not is one of the most fixable things we see.`;
+      summary = `That "flat" look isn't about lifestyle - it's about what's happening hormonally and where volume and brightness have quietly shifted. A free consult gives Juls a chance to look at your face properly and tell you exactly what's driving it and what would genuinely help without anyone being able to tell you've done anything.`;
+      points = [
+        'Perimenopause affects skin brightness, texture and subtle volume loss simultaneously',
+        'Targeted treatment addresses multiple concerns in one natural result',
+        'Juls\'s approach: subtle, never overdone, always reversible',
+        'Free consult - no obligation, just an honest assessment'
+      ];
+    }
+
+    document.getElementById('resultHeading').textContent = heading;
+    document.getElementById('resultSummary').textContent = summary;
+    const ul = document.getElementById('resultPoints');
+    ul.innerHTML = '';
+    points.forEach(p => {
+      const li = document.createElement('li');
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+
+    resultsBody.classList.remove('hidden');
+  }
+
+  // Init
+  showQ(0);
+</script>
+</body>
+</html>
